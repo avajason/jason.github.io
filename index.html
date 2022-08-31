@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Javascript Excel</title>
+
+    <!-- (X) NOT IMPORTANT -->
+    <style>
+    * { font-family: arial, sans-serif; }
+    table { border-collapse: collapse; }
+    table tr:nth-child(odd) { background: #f2f2f2; }
+    table td { padding: 10px; }
+    </style>
+
+    <!-- (A) JAVASCRIPT -->
+    <!-- https://sheetjs.com/ -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+    <!-- <script defer src="3-excel-table.js"></script> -->
+    <!-- <embed src="test_text.txt">  -->
+  </head>
+  <body>
+    <p>power: <span id="power"></span></p>
+    <p>current: <span id="current"></span></p>
+    <p>voltage: <span id="voltage"></span></p>
+    <!-- CHANGE: more sensors data can be put here -->
+
+    <input type="button" id="Stop-Machine" value="Stop Machine" onclick="stopMachine(event)" />
+    
+
+    <div id="chart" class="styles1"></div>
+    <script>
+      var chart = $('#chart').epoch({
+        type: 'time.area',
+        data: []
+      });
+
+
+
+      
+    </script>
+
+
+
+
+  </body>
+</html>
+
+<script>
+  function print(){
+
+    
+    
+    fetch('test_text.txt',{
+        // method: "PATCH"
+   })
+      .then(response => response.text())
+      .then(data => {
+        // Do something with your data
+
+        //console.log(data);
+
+
+        let result = [];
+
+        for (let line of data.trim().split('\n')) {
+
+          // if (!line.includes('#'))
+          //     continue;
+
+          let s = line.trim().split(/[#\s]+/g);
+          //console.log(s);
+
+          result.push({
+              power: s[0],
+              current: s[1],
+              voltage: s[2],
+ 
+          });
+          }
+        document.getElementById("power").innerHTML = result[0].power;
+        document.getElementById("current").innerHTML = result[0].current;
+        document.getElementById("voltage").innerHTML = result[0].voltage;
+        
+
+
+          // console.log(result[0].power);
+
+      });
+      
+  }
+
+
+
+
+
+print();
+ //setInterval(print, 1000);
+</script>
+
+<script>
+// document.getElementById("Stop-Machine").onchange = (evt) => {
+//   console.log("hi????");
+
+// }
+
+function stopMachine(e){
+  if(!confirm('Are you sure?')) {
+        e.preventDefault();
+    }else{
+
+      ///CHANGE: put our stop machine function i.e. python file
+      console.log("hiiiii");
+    }
+}
+
+//console.log(document.getElementById("Stop-Machine").onchange);
+</script>
